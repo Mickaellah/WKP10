@@ -39,16 +39,89 @@ const displayList = data => {
 		.join('');
 };
 
-const editPartner = () => {
+function wait(ms = 0) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function destroyPopup(popup) {
+	popup.classList.remove('open');
+	await wait(1000);
+	popup.remove();
+	popup = null;
+}
+
+
+const editPartner = (id) => {
 	// code edit function here
+		editPartnerPopup(id);
 };
 
-const editPartnerPopup = () => {
+const editPartnerPopup = (e) => {
 	// create edit popup here
-};
+	return new Promise (async function(
+		resolve) {
+		const form = document.createElement('form');
+		form.classList.add('popup');
+		const html = `
+			<div class="container">
+				<fieldset>
+					<label for="last-name">Last name</labe>
+					<input type="text" name="last-name" id="last-name" value="${faker.name.lastName()}"></input>
+				</fieldset>
+				<fieldset>
+					<label for="first-name">First name</labe>
+					<input type="text" name="first-name" id="first-name" value="${faker.name.firstName()}"></input>
+				</fieldset>
+				<fieldset>
+					<label for="job-title">Job title</labe>
+					<input type="text" name="job-title" id="job-title" value="${faker.name.jobTitle()}"></input>
+				</fieldset>
+				<fieldset>
+					<label for="job-area">Job area</labe>
+					<input type="text" name="job-area" id="job-area" value="${faker.name.jobArea()}"></input>
+				</fieldset>
+				<fieldset>
+					<label for="phone-number">Phone number</labe>
+					<input type="phone" name="phone-number" id="phone-number" value="${faker.phone.phoneNumber()}"></input>
+				</fieldset>
 
-const deletePartner = () => {
-	// code delete function gere
+				<button class="save">Save</buton>
+			</div>
+		`;
+		form.innerHTML = html;
+		// console.log(form);
+
+		if (e) {
+			const cancelButton = document.createElement('button');
+			cancelButton.classList.add('cancel');
+			cancelButton.type = "button";
+			cancelButton.textContent = "Cancel";
+			form.appendChild(cancelButton);
+
+			cancelButton.addEventListener('click', () => {
+				resolve(null);
+				destroyPopup(form);
+
+			}, { once: true });
+		}
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			resolve(e.target.input);
+			destroyPopup(form);
+		}, { once: true });
+
+		document.body.appendChild(form);
+		await wait(100);
+		form.classList.add('open');
+
+	});
+
+};
+editPartner();
+
+
+const deletePartner = (e) => {
+	// code delete function here
 };
 
 const deleteDeletePopup = () => {
@@ -56,3 +129,7 @@ const deleteDeletePopup = () => {
 };
 
 displayList(persons);
+
+
+const editButton = document.querySelector('button.edit');
+editButton.addEventListener('click', editPartner);

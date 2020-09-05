@@ -65,7 +65,7 @@ const editPartner = e => {
 const editPartnerPopup = (e) => {
 	// create edit popup here
 	return new Promise (async function(
-		resolve) {
+		resolve, reject) {
 		const form = document.createElement('form');
 		form.classList.add('popup');
 		const html = `
@@ -97,7 +97,7 @@ const editPartnerPopup = (e) => {
 		form.innerHTML = html;
 		// console.log(form);
 
-		if (e) {
+		if (reject) {
 			const cancelButton = document.createElement('button');
 			cancelButton.classList.add('cancel');
 			cancelButton.type = "button";
@@ -113,7 +113,7 @@ const editPartnerPopup = (e) => {
 
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
-			resolve(e.target.dataset.input.value);
+			resolve(e.target.input);
 			destroyPopup(form);
 		}, { once: true });
 
@@ -159,6 +159,7 @@ const deleteDeletePopup = (e) => {
 	});
 
 };
+
 
 // Call the function.
 displayList(persons);

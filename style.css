@@ -109,6 +109,7 @@ tr:hover {
 	width: 30%;
 	transition: all 0.25s;
 	top: 0;
+	left: 5%;
 	display: grid;
 	justify-content: center;
 	align-items: center;
@@ -154,4 +155,27 @@ input {
 
 .cancel {
 	width: 100px;
+}
+
+.deletion.open {
+	width: 40%;
+	background-color: lightblue;
+	padding: 32px;
+	border-radius: 10px;
+	position: absolute;
+	top: 50%;
+	left: 30%;
+	text-align: center;
+}
+
+
+.yes,
+.no {
+	padding: 16px;
+	border-radius: 5px;
+	background-color: chocolate;
+}
+
+.no {
+	margin-inline-start: 32px;
 }

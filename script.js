@@ -51,9 +51,15 @@ async function destroyPopup(popup) {
 }
 
 
-const editPartner = (id) => {
+const editPartner = e => {
 	// code edit function here
+	const editButton = e.target.closest('button.edit');
+
+	if (editButton) {
+		e.preventDefault();
+		const id = e.target.dataset.value;
 		editPartnerPopup(id);
+	}
 };
 
 const editPartnerPopup = (e) => {
@@ -104,9 +110,10 @@ const editPartnerPopup = (e) => {
 
 			}, { once: true });
 		}
+
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
-			resolve(e.target.input);
+			resolve(e.target.dataset.input.value);
 			destroyPopup(form);
 		}, { once: true });
 
@@ -120,9 +127,15 @@ const editPartnerPopup = (e) => {
 
 
 
-const deletePartner = (id) => {
+const deletePartner = (e) => {
 	// code delete function here
-	deleteDeletePopup(id);
+	console.log(e.target);
+	const deleteButton = e.target.closest('button.delete');
+
+	if (deleteButton) {
+		const id = Number(deleteButton.value);
+		deleteDeletePopup(id);
+	}
 };
 
 const deleteDeletePopup = (e) => {
@@ -138,19 +151,18 @@ const deleteDeletePopup = (e) => {
 			</div>
 		`;
 		div.innerHTML = html;
+
 		document.body.appendChild(div);
+		await wait(100);
+		div.classList.add('open');
+
 	});
 
 };
 
-deletePartner();
-
+// Call the function.
 displayList(persons);
 
-
-// const editButton = document.querySelector('button.edit');
-// editButton.addEventListener('click', editPartner);
+// Event listeners for the edit icon and trash icon.
 tbody.addEventListener('click', editPartner);
-
-const deleteButton = document.querySelector('button.delete');
-deleteButton.addEventListener('click', deletePartner);
+tbody.addEventListener('click', deletePartner);

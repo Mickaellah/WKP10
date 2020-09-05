@@ -116,6 +116,7 @@ tr:hover {
 	margin-inline-start: 30%;
 	background-color: darkgray;
 	border-radius: 10px;
+	margin-block-start: 10%;
 }
 
 .popup fieldset {

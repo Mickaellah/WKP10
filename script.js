@@ -117,19 +117,40 @@ const editPartnerPopup = (e) => {
 	});
 
 };
-editPartner();
 
 
-const deletePartner = (e) => {
+
+const deletePartner = (id) => {
 	// code delete function here
+	deleteDeletePopup(id);
 };
 
-const deleteDeletePopup = () => {
+const deleteDeletePopup = (e) => {
 	// create confirmation popup here
+	return new Promise(async function(resolve){
+		const div = document.createElement("div");
+		div.classList.add('deletion');
+		const html = `
+			<p>Are you sure you want to delete ${faker.name.lastName()}?</p>
+			<div>
+				<button class="yes">Yes</button>
+				<button class="no">No</button>
+			</div>
+		`;
+		div.innerHTML = html;
+		document.body.appendChild(div);
+	});
+
 };
+
+deletePartner();
 
 displayList(persons);
 
 
-const editButton = document.querySelector('button.edit');
-editButton.addEventListener('click', editPartner);
+// const editButton = document.querySelector('button.edit');
+// editButton.addEventListener('click', editPartner);
+tbody.addEventListener('click', editPartner);
+
+const deleteButton = document.querySelector('button.delete');
+deleteButton.addEventListener('click', deletePartner);
